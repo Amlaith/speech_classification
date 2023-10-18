@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Flask App</title>
+    <link type="text/css" href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Simple Flask App</h1>
+
+    <form action="/" method="POST">
+        <input type="text" name="user_input" />
+        <input type="submit" value="Submit" />
+    </form>
+
+    <p>{{ answer }}</p>
+</body>
+</html>

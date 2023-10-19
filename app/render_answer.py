@@ -43,6 +43,8 @@ funcs = {
 }
 
 def render_answer(command):
+    print(command)
+    print(command in funcs)
     if command in funcs:
         return funcs[command]()
     else:

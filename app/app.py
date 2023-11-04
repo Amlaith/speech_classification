@@ -24,7 +24,7 @@ def index():
     # answer = d.get(user_input)
     
     if user_input is None:
-        answer = 'Напишите что-нибудь в форму'
+        answer = ''
     else:
         command = decode_command(user_input)
         answer = render_answer(command)

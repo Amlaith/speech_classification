@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template, flash, redirect
+from flask import Flask, request, render_template, flash, redirect, jsonify
 from render_answer import render_answer
 from classifier import decode_command
 import os
 import uuid
 
 
-UPLOAD_FOLDER = '..\\data\\audio'
+UPLOAD_FOLDER = '..\\data\\audio\\to_process'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -16,38 +16,53 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Create a route for the form
 @app.route('/', methods=['GET', 'POST'])
-def index():
-    # Get the user input from the form
-    user_input = (request.form.get('user_input'))
-
-    # Get the corresponding text from the dictionary
-    # answer = d.get(user_input)
-    
-    if user_input is None:
-        answer = ''
+def index():    
+    if request.method == 'POST' and 'file' in request.files:
+        
+        command = decode_command()
+        server_response = render_answer(command)
+        return server_response
     else:
-        command = decode_command(user_input)
-        answer = render_answer(command)
+        server_response = ['<p><p>']
+    return render_template('index.html', serverResponse=server_response)
 
-    # Render the template with the corresponding text
-    return render_template('index.html', answer=answer)
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     # check if the post request has the file part
+#     if 'file' in request.files:
+#         file = request.files['file']
+#         # if user does not select file, browser also
+#         # submit an empty part without filename
+#         if file.filename == '':
+#             flash('No selected file')
+#             return redirect(request.url)
+#         file_name = str(uuid.uuid4()) + ".mp3"
+#         full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+#         file.save(full_file_name)
 
-@app.route('/save-record', methods=['POST'])
-def save_record():
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    # if user does not select file, browser also
-    # submit an empty part without filename
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
-    file_name = str(uuid.uuid4()) + ".mp3"
-    full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
-    file.save(full_file_name)
-    return '<h1>Success</h1>'
+#         # command = decode_command()
+#         # answer = render_answer(command)
+#         answer = 'answer'
+#     else: answer = 'init'
+#     return render_template('index.html', answer=answer)
+
+# @app.route('/save-record', methods=['POST'])
+# def save_record():
+#     # check if the post request has the file part
+#     if 'file' not in request.files:
+#         flash('No file part')
+#         return redirect(request.url)
+#     file = request.files['file']
+#     # if user does not select file, browser also
+#     # submit an empty part without filename
+#     if file.filename == '':
+#         flash('No selected file')
+#         return redirect(request.url)
+#     file_name = str(uuid.uuid4()) + ".mp3"
+#     full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+#     file.save(full_file_name)
+
+#     return render_template('index.html', answer=answer)
 
 if __name__ == '__main__':
     app.run(debug=True)    

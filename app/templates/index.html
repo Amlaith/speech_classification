@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Simple Flask App</title>
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link type="text/css" href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,600,1,0" />
@@ -11,15 +12,19 @@
 <body>
     <h1>Command!</h1>
 
-    <form action="/" method="POST">
+    <div id="buttonContainer">
         <button id="startRecording">
             <span class="material-symbols-outlined">
                 mic
                 </span>
         </button>
-    </form>
+        <!-- <div id="startRecordingFilling"></div> -->
+    </div>
 
-    <p>{{ answer }}</p>
+    <div id="serverResponse">
+        <p></p>
+    </div>
+    
 </body>
 <script>
 
@@ -30,7 +35,7 @@
         //Chrome inspector shows that the post data includes a file and a title.
         $.ajax({
             type: 'POST',
-            url: '/save-record',
+            url: '/',
             data: form,
             cache: false,
             processData: false,
@@ -43,22 +48,76 @@
     let audioChunks = null;
     let audioStream = null;
     const startRecordingButton = document.getElementById('startRecording');
+    const startRecordingFilling = document.getElementById('startRecordingFilling');
+    const serverResponseElement = document.getElementById('serverResponse');
     const recordingDuration = 2000; // 2 seconds
 
 
+    // startRecordingButton.addEventListener('click', () => {
+    //     startRecordingButton.disabled = true;
+    //     audioChunks = [];
+        
+    //     navigator.mediaDevices.getUserMedia({ audio: true })
+    //         .then(stream => {
+    //             audioStream = stream;   
+    //             rec = new MediaRecorder(stream);
+    //             rec.ondataavailable = e => {
+    //                 audioChunks.push(e.data);
+    //                 if (rec.state == "inactive") {
+    //                     let blob = new Blob(audioChunks, { type: 'audio/mpeg-3' });
+    //                     sendData(blob);
+    //                 }
+    //             };
+    //             rec.start();
+    //         })
+    //         .catch(error => {
+    //             console.error('Error accessing microphone:', error);
+    //             startRecordingButton.disabled = false;
+    //         });
+    //         startRecordingButton.classList.add("button-recording");
+    //         startRecordingFilling.classList.add("fill");
+    //         setTimeout(() => {
+    //             if (rec) {
+    //                 rec.stop();
+    //             }
+    //             if (audioStream) {
+    //                 // Stop the audio stream and release resources
+    //                 audioStream.getTracks().forEach(track => track.stop());
+    //             }
+    //             startRecordingButton.disabled = false;
+    //             startRecordingButton.classList.remove("button-recording");
+    //             startRecordingFilling.classList.remove("fill");
+    //         }, recordingDuration);
+    // });
     startRecordingButton.addEventListener('click', () => {
         startRecordingButton.disabled = true;
         audioChunks = [];
-        
+
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
-                audioStream = stream;   
+                audioStream = stream;
                 rec = new MediaRecorder(stream);
                 rec.ondataavailable = e => {
                     audioChunks.push(e.data);
                     if (rec.state == "inactive") {
                         let blob = new Blob(audioChunks, { type: 'audio/mpeg-3' });
-                        sendData(blob);
+
+                        // Send the recorded audio to the server
+                        const formData = new FormData();
+                        formData.append('file', blob, 'data.mp3');
+
+                        fetch('/', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            // Update the content of the serverResponse element with the server's response
+                            serverResponseElement.innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Error sending the audio:', error);
+                        });
                     }
                 };
                 rec.start();
@@ -67,18 +126,21 @@
                 console.error('Error accessing microphone:', error);
                 startRecordingButton.disabled = false;
             });
-            startRecordingButton.classList.add("button-recording");
-            setTimeout(() => {
-                if (rec) {
-                    rec.stop();
-                }
-                if (audioStream) {
-                    // Stop the audio stream and release resources
-                    audioStream.getTracks().forEach(track => track.stop());
-                }
-                startRecordingButton.disabled = false;
-                startRecordingButton.classList.remove("button-recording");
-            }, recordingDuration);
+            
+        startRecordingButton.classList.add("button-recording");
+
+        setTimeout(() => {
+            if (rec) {
+                rec.stop();
+            }
+            if (audioStream) {
+                // Stop the audio stream and release resources
+                audioStream.getTracks().forEach(track => track.stop());
+            }
+            startRecordingButton.disabled = false;
+            startRecordingButton.classList.remove("button-recording");
+            // startRecordingFilling.classList.remove("fill");
+        }, recordingDuration);
     });
 
 

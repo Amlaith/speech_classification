@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 def today():
     today_date = datetime.now()
     r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110687?start={today_date.strftime("%Y.%m.%d")}&finish={today_date.strftime("%Y.%m.%d")}&lng=1')
-    answer = ''
+    answer = '<h2>Расписание на сегодня:</h2>'
     for lesson in r.json():
         answer += (f"<p>{lesson['beginLesson']} - {lesson['endLesson']} \n {lesson['building']}  \n {lesson['auditorium']}  \n {lesson['discipline']}  \n {lesson['lecturer']} \n\n</p>")
     return answer

@@ -3,6 +3,7 @@ from render_answer import render_answer
 from classifier import decode_command
 import os
 import uuid
+from pydub import AudioSegment
 
 
 UPLOAD_FOLDER = '..\\data\\audio\\to_process'
@@ -18,7 +19,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/', methods=['GET', 'POST'])
 def index():    
     if request.method == 'POST' and 'file' in request.files:
-        
+        file = request.files['file']
+        file_name = str(uuid.uuid4()) + ".wav"
+        full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+        file.save(full_file_name)
+
         command = decode_command()
         server_response = render_answer(command)
         return server_response

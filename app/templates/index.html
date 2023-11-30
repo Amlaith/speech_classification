@@ -100,11 +100,11 @@
                 rec.ondataavailable = e => {
                     audioChunks.push(e.data);
                     if (rec.state == "inactive") {
-                        let blob = new Blob(audioChunks, { type: 'audio/mpeg-3' });
+                        let blob = new Blob(audioChunks, { type: 'audio/wav' });
 
                         // Send the recorded audio to the server
                         const formData = new FormData();
-                        formData.append('file', blob, 'data.mp3');
+                        formData.append('file', blob, 'data.wav');
 
                         fetch('/', {
                             method: 'POST',

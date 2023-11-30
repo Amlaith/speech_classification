@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, flash, redirect, jsonify
 from render_answer import render_answer
 from classifier import decode_command
+from utils.spec_maker import transform_input_to_spec
 import os
 import uuid
 from pydub import AudioSegment
@@ -20,10 +21,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():    
     if request.method == 'POST' and 'file' in request.files:
         file = request.files['file']
-        file_name = str(uuid.uuid4()) + ".wav"
+        # file_name = str(uuid.uuid4()) + ".wav"
+        file_name = "input_audio.wav"
         full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
         file.save(full_file_name)
-
+        transform_input_to_spec()
         command = decode_command()
         server_response = render_answer(command)
         return server_response

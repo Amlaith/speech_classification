@@ -30,9 +30,9 @@ def three():
     return 'That\'s three'
 
 funcs = {
-    'сегодня': today,
-    'завтра': tomorrow,
-    'three': three
+    'today': today,
+    'tomorrow': tomorrow,
+    'news': three
 }
 
 def render_answer(command):

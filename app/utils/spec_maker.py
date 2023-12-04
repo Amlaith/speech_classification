@@ -12,7 +12,7 @@ def generate_spectrogram(input_audio_path, output_spec_path):
     # Create a spectrogram
     plt.figure(figsize=(0.72, 0.72))
     spectrogram = librosa.display.specshow(
-        librosa.amplitude_to_db(librosa.stft(y, hop_length=512), ref=np.max),
+        librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=512)), ref=np.max),
         y_axis='log',
         x_axis='time'
         )
@@ -30,12 +30,7 @@ def process_input_audio(input_audio_path, output_spec_path):
     os.remove(input_audio_path)
 
 def transform_input_to_spec():
-    input_audio_path = '../data/audio/to_process/input_audio.wav'
-    output_spec_path = '../data/specs/to_process/input_spec.png'
+    input_audio_path = 'to_process/input_audio.wav'
+    output_spec_path = 'to_process/input_spec.png'
     process_input_audio(input_audio_path, output_spec_path)
 
-if __name__ == "__main__":
-    input_audio_path = '../../data/audio/to_process/input_audio.wav'
-    output_spec_path = '../../data/specs/to_process/input_spec.png'
-
-    process_input_audio(input_audio_path, output_spec_path)

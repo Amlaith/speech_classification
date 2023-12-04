@@ -12,7 +12,7 @@ def create_spectrogram(audio_path, save_path):
     # Create a spectrogram
     plt.figure(figsize=(0.72, 0.72))
     spectrogram = librosa.display.specshow(
-        librosa.amplitude_to_db(librosa.stft(y, hop_length=512), ref=np.max),
+        librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=512)), ref=np.max),
         y_axis='log',
         x_axis='time'
         )

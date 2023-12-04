@@ -7,7 +7,8 @@ def today():
     r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110687?start={today_date.strftime("%Y.%m.%d")}&finish={today_date.strftime("%Y.%m.%d")}&lng=1')
     answer = f'<h2>Расписание на сегодня, {today_date.strftime("%Y.%m.%d")}:</h2>'
     for lesson in r.json():
-        answer += (f"<p>{lesson['beginLesson']} - {lesson['endLesson']} \n {lesson['building']}  \n {lesson['auditorium']}  \n {lesson['discipline']}  \n {lesson['lecturer']} \n\n</p>")
+        answer += (f"<p>{lesson['beginLesson']} - {lesson['endLesson']} \n  {lesson['building']}  \n  {lesson['auditorium']}  \n  {lesson['discipline']}  \n  {lesson['lecturer']} \n\n</p>")
+    answer = '<div>' + answer + '</div>'
     return answer
     
 
@@ -17,13 +18,14 @@ def tomorrow():
     answer = f'<h2>Расписание на завтра, {tmr_date.strftime("%Y.%m.%d")}:</h2>'
     for lesson in r.json():
         answer += ''.join([
-            f"{lesson['beginLesson']} - {lesson['endLesson']}", '\n',
-            lesson['building'], '\n',
-            lesson['auditorium'], '\n',
-            lesson['discipline'], '\n',
+            f"{lesson['beginLesson']} - {lesson['endLesson']}", '\n  ',
+            lesson['building'], '\n  ',
+            lesson['auditorium'], '\n  ',
+            lesson['discipline'], '\n  ',
             lesson['lecturer'], '\n',
             ])
         answer += '\n'
+        answer = '<div>' + answer + '</div>'
     return answer
 
 def three():

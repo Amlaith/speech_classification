@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, flash, redirect, jsonify
-from render_answer import render_answer
+from answer_builder import render_answer
 from classifier import decode_with_cnn, decode_with_tabular
 from utils.spec_maker import transform_input_to_spec
 import os
@@ -25,13 +25,13 @@ def index():
         file_name = "input_audio.wav"
         full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
         file.save(full_file_name)
-        # transform_input_to_spec()
-        # command = decode_with_cnn()
-        command = decode_with_tabular()
+        transform_input_to_spec()
+        command = decode_with_cnn()
+        # command = decode_with_tabular()
         server_response = render_answer(command)
         return server_response
     else:
-        server_response = ['<p><p>']
+        server_response = ['<p>How can I help you?<p>']
     return render_template('index.html', serverResponse=server_response)
 
 

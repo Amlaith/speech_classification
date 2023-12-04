@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Flask App</title>
+    <title>Классификатор Команд</title>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link type="text/css" href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link type="text/css" href="{{ url_for('static', filename='style_dry.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,600,1,0" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -18,11 +22,19 @@
                 mic
                 </span>
         </button>
-        <!-- <div id="startRecordingFilling"></div> -->
+        <div id="hint">Список команд
+            <div id="commandsList">
+                <ul>
+                <li>Сегодня</li>
+                <li>Завтра</li>
+                <li>Новости</li>                
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div id="serverResponse">
-        <p></p>
+        <div><p id="start">← Нажмите на кнопку и скажите команду</p></div>
     </div>
     
 </body>
@@ -48,7 +60,6 @@
     let audioChunks = null;
     let audioStream = null;
     const startRecordingButton = document.getElementById('startRecording');
-    const startRecordingFilling = document.getElementById('startRecordingFilling');
     const serverResponseElement = document.getElementById('serverResponse');
     const recordingDuration = 2000; // 2 seconds
 

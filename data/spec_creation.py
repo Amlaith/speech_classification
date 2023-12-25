@@ -25,7 +25,7 @@ def create_spectrogram(audio_path, save_path):
 def process_folder(input_folder, output_folder):
     for root, dirs, files in os.walk(input_folder):
         for file in files:
-            if file.endswith('.mp3'):
+            if file.endswith('.wav'):
                 audio_path = os.path.join(root, file)
                 
                 # Create corresponding output subfolder
@@ -41,7 +41,7 @@ def process_folder(input_folder, output_folder):
                 create_spectrogram(audio_path, output_path)
 
 if __name__ == "__main__":
-    input_folder = "audio"  # Change this to your audio folder path
-    output_folder = "specs"  # Change this to your spectrograms folder path
+    input_folder = "recorded_audio"  # audio folder path
+    output_folder = "recorded_specs"  # spectrograms folder path
 
     process_folder(input_folder, output_folder)

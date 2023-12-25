@@ -63,12 +63,6 @@ button#startRecording.button-recording {
     z-index: 4;
 }
 
-p {
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-    font-size: 18px;
-    margin-top: 5%;
-}
 
 #startRecording:after {
     position: relative;
@@ -99,3 +93,10 @@ p {
   #serverResponse {
     white-space: pre-wrap;
   }
+
+  p {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 5%;
+}

@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 
+plt.switch_backend('agg')
+
 def generate_spectrogram(input_audio_path, output_spec_path):
     # Load the audio file
     y, sr = librosa.load(input_audio_path, sr=None)

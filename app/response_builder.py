@@ -32,13 +32,18 @@ def three():
     answer = '<h2>Новости Университета:</h2>'
     return answer
 
+def not_sure():
+    answer = '<h2>Не удалось распознать команду</h2>'
+    return answer
+
 funcs = {
     'today': today,
     'tomorrow': tomorrow,
-    'news': three
+    'news': three,
+    'not_sure': not_sure
 }
 
-def render_answer(command):
+def render_response(command):
     if command in funcs:
         return funcs[command]()
     else:

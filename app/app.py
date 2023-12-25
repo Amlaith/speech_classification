@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, flash, redirect, jsonify
-from answer_builder import render_answer
-from classifier import decode_with_cnn, decode_with_tabular
+from response_builder import render_response
+from classifier import decode_with_cnn, decode_with_tabular, decode_with_knn
 from utils.spec_maker import transform_input_to_spec
 import os
 import uuid
@@ -8,13 +8,10 @@ import uuid
 
 
 UPLOAD_FOLDER = 'to_process'
+# UPLOAD_FOLDER = '../data/recorded_audio/tomorrow/'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# d = {'one': 'that\'s one', 'two': 'this is two', 'three': 'three here'}
-# @app.route("/")
-# def hello_world():
-#     return "<p>Hello, World!</p>"
 
 # Create a route for the form
 @app.route('/', methods=['GET', 'POST'])
@@ -25,13 +22,15 @@ def index():
         file_name = "input_audio.wav"
         full_file_name = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
         file.save(full_file_name)
-        transform_input_to_spec()
-        command = decode_with_cnn()
+        # return render_template('index.html', serverResponse='<div><p>recorded<p></div>')
+        # transform_input_to_spec()
+        # command = decode_with_cnn()
+        command = decode_with_knn()
         # command = decode_with_tabular()
-        server_response = render_answer(command)
+        server_response = render_response(command)
         return server_response
     else:
-        server_response = ['<p>How can I help you?<p>']
+        server_response = ['<p>← Нажмите на кнопку и скажите команду<p>']
     return render_template('index.html', serverResponse=server_response)
 
 

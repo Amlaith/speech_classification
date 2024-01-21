@@ -41,7 +41,7 @@ def process_folder(input_folder, output_folder):
                 create_spectrogram(audio_path, output_path)
 
 if __name__ == "__main__":
-    input_folder = "recorded_audio"  # audio folder path
-    output_folder = "recorded_specs"  # spectrograms folder path
+    input_folder = "phone_audio"  # audio folder path
+    output_folder = "phone_specs"  # spectrograms folder path
 
     process_folder(input_folder, output_folder)

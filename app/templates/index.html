@@ -14,8 +14,6 @@
 
 </head>
 <body>
-    <h1>Command!</h1>
-
     <div id="buttonContainer">
         <button id="startRecording">
             <span class="material-symbols-outlined">
@@ -34,7 +32,7 @@
     </div>
 
     <div id="serverResponse">
-        <div><p id="start">← Нажмите на кнопку и скажите команду</p></div>
+        <div><p id="start">Нажмите на кнопку и скажите команду</p></div> <!-- ← -->>
     </div>
     
 </body>
@@ -63,43 +61,7 @@
     const serverResponseElement = document.getElementById('serverResponse');
     const recordingDuration = 2000; // 2 seconds
 
-
-    // startRecordingButton.addEventListener('click', () => {
-    //     startRecordingButton.disabled = true;
-    //     audioChunks = [];
-        
-    //     navigator.mediaDevices.getUserMedia({ audio: true })
-    //         .then(stream => {
-    //             audioStream = stream;   
-    //             rec = new MediaRecorder(stream);
-    //             rec.ondataavailable = e => {
-    //                 audioChunks.push(e.data);
-    //                 if (rec.state == "inactive") {
-    //                     let blob = new Blob(audioChunks, { type: 'audio/mpeg-3' });
-    //                     sendData(blob);
-    //                 }
-    //             };
-    //             rec.start();
-    //         })
-    //         .catch(error => {
-    //             console.error('Error accessing microphone:', error);
-    //             startRecordingButton.disabled = false;
-    //         });
-    //         startRecordingButton.classList.add("button-recording");
-    //         startRecordingFilling.classList.add("fill");
-    //         setTimeout(() => {
-    //             if (rec) {
-    //                 rec.stop();
-    //             }
-    //             if (audioStream) {
-    //                 // Stop the audio stream and release resources
-    //                 audioStream.getTracks().forEach(track => track.stop());
-    //             }
-    //             startRecordingButton.disabled = false;
-    //             startRecordingButton.classList.remove("button-recording");
-    //             startRecordingFilling.classList.remove("fill");
-    //         }, recordingDuration);
-    // });
+    
     startRecordingButton.addEventListener('click', () => {
         startRecordingButton.disabled = true;
         audioChunks = [];
@@ -153,7 +115,19 @@
             // startRecordingFilling.classList.remove("fill");
         }, recordingDuration);
     });
+    document.addEventListener('DOMContentLoaded', function() {
+        var hint = document.getElementById('hint');
+        var commandsList = document.getElementById('commandsList');
 
+        hint.addEventListener('click', function() {
+            // Toggle the display of commandsList on click
+            if (commandsList.style.display === 'block') {
+                commandsList.style.display = 'none';
+            } else {
+                commandsList.style.display = 'block';
+            }
+        });
+    });
 
 </script>
 </html>

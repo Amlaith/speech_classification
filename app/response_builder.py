@@ -1,20 +1,20 @@
 import requests
 from datetime import datetime, timedelta
 
-
+# Группа - ПИ22-2
 def today():
     today_date = datetime.now()
-    r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110687?start={today_date.strftime("%Y.%m.%d")}&finish={today_date.strftime("%Y.%m.%d")}&lng=1')
+    r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110928?start={today_date.strftime("%Y.%m.%d")}&finish={today_date.strftime("%Y.%m.%d")}&lng=1')
     answer = f'<h2>Расписание на сегодня, {today_date.strftime("%Y.%m.%d")}:</h2>'
     for lesson in r.json():
-        answer += (f"<p>{lesson['beginLesson']} - {lesson['endLesson']} \n  {lesson['building']}  \n  {lesson['auditorium']}  \n  {lesson['discipline']}  \n  {lesson['lecturer']} \n\n</p>")
+        answer += (f"<p>{lesson['beginLesson']} - {lesson['endLesson']} \n  {lesson['building']}  \n  {lesson['auditorium']}  \n  {lesson['discipline']}  \n  {lesson['kindOfWork']}  \n  {lesson['lecturer']} \n\n</p>")
     answer = '<div>' + answer + '</div>'
     return answer
     
 
 def tomorrow():
     tmr_date = datetime.now() + timedelta(1)
-    r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110687?start={tmr_date.strftime("%Y.%m.%d")}&finish={tmr_date.strftime("%Y.%m.%d")}&lng=1')
+    r = requests.get(f'https://ruz.fa.ru/api/schedule/group/110928?start={tmr_date.strftime("%Y.%m.%d")}&finish={tmr_date.strftime("%Y.%m.%d")}&lng=1')
     answer = f'<h2>Расписание на завтра, {tmr_date.strftime("%Y.%m.%d")}:</h2>'
     for lesson in r.json():
         answer += ''.join([
@@ -22,6 +22,7 @@ def tomorrow():
             lesson['building'], '\n  ',
             lesson['auditorium'], '\n  ',
             lesson['discipline'], '\n  ',
+            lesson['kindOfWork'], '\n  ',
             lesson['lecturer'], '\n',
             ])
         answer += '\n'

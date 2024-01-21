@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     display: flex;
     color:#2D3E40;
@@ -13,8 +13,8 @@ body {
     flex-direction: column;
     justify-content: center;
     border-right: 2px solid #669995;
-    width: 350px; /* Adjust the width of the fixed column as needed */
-    background-color: #E4F2E7; /* Optional: Set a background color for the fixed column */
+    width: 350px;
+    background-color: #E4F2E7;
     position: fixed;    
   }
 
@@ -26,16 +26,14 @@ body {
     align-items: center;
     background-color: #f0f0f0;
     flex: 1;
-    margin-left: 250px; /* Set to the width of the fixed column */
-    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    margin-left: 250px;
+    overflow-y: auto;
   }
 
   button#startRecording {
     width: 100px;
     height: 100px;
     z-index: 1;
-    /* align-self: center; */
-    /* margin-top: 100%; */
     border: 2px solid #387373;
     border-radius: 50%;
     background-color: #93BFB7;
@@ -50,82 +48,202 @@ body {
     box-shadow: 0 0 40px 0px #93BFB7, 0 0 5px 5px #93BFB7;
     transition: all 15ms ease-in-out;
     margin-bottom: 10px;
+} */
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: row; /* Default to row for larger screens */
+  color: #2D3E40;
+  font-family: 'Philosopher', sans-serif;
+  background-color: #f0f0f0;
+}
+
+#buttonContainer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 2px solid #669995;
+  width: 350px;
+  background-color: #E4F2E7;
+  position: fixed;
+}
+
+#serverResponse {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  flex: 1;
+  margin-left: 350px; /* Adjust to match buttonContainer width */
+  overflow-y: auto;
+}
+
+button#startRecording {
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+  border: 2px solid #387373;
+  border-radius: 50%;
+  background-color: #93BFB7;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 40px 0px #93BFB7, 0 0 5px 5px #93BFB7;
+  transition: all 15ms ease-in-out;
+  margin-bottom: 10px;
 }
 
 button#startRecording:hover {
-    background-color: #387373;
-    box-shadow: 0 0 14px 14px #387373;
-    /* transition: background-color 0.2s; */
+  background-color: #387373;
+  box-shadow: 0 0 14px 14px #387373;
+  /* transition: background-color 0.2s; */
 }
 
 button#startRecording.button-recording {
-    z-index: 1;
-    background-color: #387373;
-    box-shadow: 0 0 14px 14px #387373;
+  z-index: 1;
+  background-color: #387373;
+  box-shadow: 0 0 14px 14px #387373;
 }
 
 .material-symbols-outlined {
-    font-size: 50px !important;
-    position: absolute;
-    z-index: 4;
+  font-size: 50px !important;
+  position: absolute;
+  z-index: 4;
 }
 
 
 #startRecording:after {
-    position: relative;
-    z-index: 3;
-    content: "";
-    top: 50%; /* Start from the vertical center */
-    left: 50%; /* Start from the horizontal center */
-    width: 0px;
-    height: 0px;
-    background: #0A808A;
-    box-shadow: 0 0 0 0 #0A808A;
-    border-radius: 50%; /* Ensures it remains a circle */
-    transition: all 0s; /* Change transition to 'all' to cover width, height, and position */
-    transform: translate(-50%, -50%); /* Center the element */
+  position: relative;
+  z-index: 3;
+  content: "";
+  top: 50%; /* Start from the vertical center */
+  left: 50%; /* Start from the horizontal center */
+  width: 0px;
+  height: 0px;
+  background: #0A808A;
+  box-shadow: 0 0 0 0 #0A808A;
+  border-radius: 50%; /* Ensures it remains a circle */
+  transition: all 0s; /* Change transition to 'all' to cover width, height, and position */
+  transform: translate(-50%, -50%); /* Center the element */
 
-  }
+}
   
 #startRecording.button-recording:after{
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: #93BFB7;
-    box-shadow: 0 0 20px 20px #93BFB7;
-    transition: all 2s linear;
-  }
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: #93BFB7;
+  box-shadow: 0 0 20px 20px #93BFB7;
+  transition: all 2s linear;
+}
 
 #hint {
-    cursor: pointer;
-    margin-top: 90vh;
-    position: absolute;
-  }
+  cursor: pointer;
+  margin-top: 90vh;
+  position: absolute;
+}
 
 #commandsList {
-    display: none;
-    position: absolute;
-    bottom: 100%;
-    left: 30%;
-    transform: translateX(-50%);
-    padding: 10px;
-  }
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 30%;
+  transform: translateX(-50%);
+  padding: 10px;
+}
 
 #hint ul {
-    list-style: none;
-    display: grid;
-    gap: 1em;
+  list-style: none;
+  display: grid;
+  gap: 1em;
 }
   
 #hint:hover #commandsList {
-    display: block;
-  }
+  display: block;
+}
 
 
 #serverResponse {
-    white-space: pre-wrap;
-  }
+  white-space: pre-wrap;
+}
 
 #start {
+  font-size: 3em;
+}
+
+@media (max-width: 1000px) { /* Adjust breakpoint as needed */
+  body {
+    flex-direction: column;
+    font-size: 30px;
+  }
+
+  #buttonContainer {
+    height: 20%;
+    width: 100%;
+    border-right: none;
+    border-top: 2px solid #669995;
+    position: fixed;
+    bottom: 0;
+  }
+
+  #serverResponse {
+    flex: 1;
+    justify-content: center; 
+    align-items: center;
+    margin-left: 0;
+    margin-bottom: 100px;
+    padding-top: 20px;
+    font-size: 30px;
+  }
+  
+  #start {
+    text-align: center;
+    width: 100%;
     font-size: 3em;
+  }
+
+  button#startRecording {
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+    border: 2px solid #387373;
+    border-radius: 50%;
+    background-color: #93BFB7;
+    color: #fff;
+    font-size: 60px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 40px 0px #93BFB7, 0 0 5px 5px #93BFB7;
+    transition: all 15ms ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  #startRecording.button-recording:after{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .material-symbols-outlined {
+    font-size: 100px !important;
+  }
+
+  #hint {
+    bottom: 20%;
+    right: 10%;
+    font-size: 30px;
+  }
 }

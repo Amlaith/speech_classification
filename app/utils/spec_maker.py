@@ -29,7 +29,7 @@ def process_input_audio(input_audio_path, output_spec_path):
     generate_spectrogram(input_audio_path, output_spec_path)
 
     # Remove the input audio file
-    os.remove(input_audio_path)
+    # os.remove(input_audio_path)
 
 def transform_input_to_spec():
     input_audio_path = 'to_process/input_audio.wav'
